@@ -1,6 +1,6 @@
 module naverdictionary/main
 
-go 1.23.6
+go 1.23
 
 replace naverdictionary/scraper => ./scraper
 
