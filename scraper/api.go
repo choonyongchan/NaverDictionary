@@ -173,9 +173,9 @@ func Get(searchterm string) (DictInfo, error) {
 	if errsearchinfo != nil {
 		return DictInfo{}, errsearchinfo
 	}
-	dictinfo, error := Scrape(searchinfo)
-	if error != nil {
-		return DictInfo{}, error
+	dictinfo, errscrape := Scrape(searchinfo)
+	if errscrape != nil {
+		return DictInfo{}, errscrape
 	}
 	return dictinfo, nil
 }
@@ -206,4 +206,14 @@ func GetSearchInfoRaw(searchterm string) (map[string]interface{}, error) {
 		return nil, errsearchinfo
 	}
 	return searchinfo, nil
+}
+
+// Scrape Naver Dictionary from a Search Term. (Public API)
+func GetMessage(searchterm string) (string, error) {
+	dictinfo, err := Get(searchterm)
+	if err != nil {
+		return "", err
+	}
+	message := Buildmessage(dictinfo)
+	return message, nil
 }
