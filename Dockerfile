@@ -1,5 +1,5 @@
 # BUILD STAGE
-FROM golang:1.23 AS build-stage
+FROM golang:1.24 AS build-stage
 WORKDIR /app
 # Copy Files
 COPY go.mod go.sum ./
