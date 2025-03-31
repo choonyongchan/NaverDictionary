@@ -3,7 +3,6 @@ package rest
 import (
 	"errors"
 	"naverdictionary/scraper"
-
 	"github.com/gin-gonic/gin"
 )
 
