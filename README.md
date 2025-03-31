@@ -1,9 +1,7 @@
-![Github Actions](https://github.com/choonyongchan/NaverDictionary/actions/workflows/main.yml/badge.svg)
-
-![Docker Image Version](https://img.shields.io/docker/v/sadlyharry/naverdictionary)
-
-
 # NaverDictionary Scraper
+
+[![Test](https://github.com/choonyongchan/NaverDictionary/actions/workflows/go.yml/badge.svg)](https://github.com/choonyongchan/NaverDictionary/actions/workflows/go.yml)
+![Docker Pulls](https://img.shields.io/docker/pulls/sadlyharry/naverdictionary)
 
 This repository contains the source code for the NaverDictionary microservice, which scrapes the Naver Korean-English Dictionary and provides a REST API for retrieving Korean word information, including translations and additional metadata. This service can be easily deployed via Docker.
 
