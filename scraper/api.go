@@ -154,35 +154,13 @@ func GetSearchInfo(entryid string) (map[string]interface{}, error) {
 	return searchinfo, nil
 }
 
-// Scrape Naver Dictionary from a Search Term. (Public API)
-func Get(searchterm string) (DictInfo, error) {
-	sanitised := Sanitise(searchterm)
-	if sanitised == "" {
-		welcomemsg := "Welcome to NaverDict Bot! Please enter a Korean word to search (e.g. 나무)."
-		return DictInfo{}, errors.New(welcomemsg)
-	}
-	entryinfo, errentryinfo := GetEntryInfo(sanitised)
-	if errentryinfo != nil {
-		return DictInfo{}, errentryinfo
-	}
-	entryid, errentryid := GetEntryId(entryinfo)
-	if errentryid != nil {
-		return DictInfo{}, errentryid
-	}
-	searchinfo, errsearchinfo := GetSearchInfo(entryid)
-	if errsearchinfo != nil {
-		return DictInfo{}, errsearchinfo
-	}
-	dictinfo, errscrape := Scrape(searchinfo)
-	if errscrape != nil {
-		return DictInfo{}, errscrape
-	}
-	return dictinfo, nil
-}
-
 // Scrape Entry Information from Naver Dictionary. (Public API)
 func GetEntryInfoRaw(searchterm string) (map[string]interface{}, error) {
 	sanitised := Sanitise(searchterm)
+	if sanitised == "" {
+		welcomemsg := "Welcome to NaverDict Bot! Please enter a Korean word to search (e.g. 나무)."
+		return nil, errors.New(welcomemsg)
+	}
 	entryinfo, errentryinfo := GetEntryInfo(sanitised)
 	if errentryinfo != nil {
 		return nil, errentryinfo
@@ -192,8 +170,7 @@ func GetEntryInfoRaw(searchterm string) (map[string]interface{}, error) {
 
 // Scrape Search Information from Naver Dictionary. (Public API)
 func GetSearchInfoRaw(searchterm string) (map[string]interface{}, error) {
-	sanitised := Sanitise(searchterm)
-	entryinfo, errentryinfo := GetEntryInfo(sanitised)
+	entryinfo, errentryinfo := GetEntryInfoRaw(searchterm)
 	if errentryinfo != nil {
 		return nil, errentryinfo
 	}
@@ -206,6 +183,19 @@ func GetSearchInfoRaw(searchterm string) (map[string]interface{}, error) {
 		return nil, errsearchinfo
 	}
 	return searchinfo, nil
+}
+
+// Scrape Naver Dictionary from a Search Term. (Public API)
+func Get(searchterm string) (DictInfo, error) {
+	searchinfo, errsearchinfo := GetSearchInfoRaw(searchterm)
+	if errsearchinfo != nil {
+		return DictInfo{}, errsearchinfo
+	}
+	dictinfo, errscrape := Scrape(searchinfo)
+	if errscrape != nil {
+		return DictInfo{}, errscrape
+	}
+	return dictinfo, nil
 }
 
 // Scrape Naver Dictionary from a Search Term. (Public API)

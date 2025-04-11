@@ -8,6 +8,7 @@ COPY scraper ./scraper
 COPY *.go ./
 # Install Dependencies
 RUN go mod download
+RUN go get github.com/gin-gonic/gin
 # Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /naverdictionary
 
